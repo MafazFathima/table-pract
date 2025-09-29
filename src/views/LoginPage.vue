@@ -13,6 +13,7 @@ const password = ref("");
 const rememberMe = ref(false);
 const showPassword = ref(false);
 const errorMessage = ref("");
+const loading =ref(false);
 
 const isEmailValid = computed(() => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,8 +22,7 @@ const isEmailValid = computed(() => {
 
 const handleLogin = async () => {
   errorMessage.value = "";
-
-  console.log("email", email.value);
+loading.value= true;
 
   if (!isEmailValid.value) {
     errorMessage.value = "Please enter a valid email address.";
@@ -31,15 +31,17 @@ const handleLogin = async () => {
 
   try {
     const response = await login(email.value, password.value);
-    if (response.statusCode.tolowerCase() === "ok") {
+    if (response.statusCode.toLowerCase() === "ok") {
       const token = response.data.accessToken;
       localStorage.setItem("accessToken", token);
-      
+      router.push("/dashboard");
     } else {
       errorMessage.value = "something went code ";
     }
   } catch (err) {
-    errorMessage.value = err.response.data.message;
+    errorMessage.value = err.response?.data?.message || "Login failed.";
+  } finally{
+    loading.value=false;
   }
 };
 </script>
@@ -127,10 +129,34 @@ const handleLogin = async () => {
         <!-- Login Button -->
         <button
           type="submit"
+          :disabled="loading"
           class="w-full bg-orange-500 text-white py-2 cursor-pointer rounded-md hover:bg-orange-600 transition"
-        >
-          Log In
+        ><span v-if="!loading">Log In</span>
+          <span v-else class="flex items-center justify-center">
+            <svg
+              class="animate-spin h-5 w-5 mr-2 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+            Loading...
+          </span>
         </button>
+         
 
         <div class="text-center mt-2">
           <a href="#" class="text-sm text-orange-500 hover:underline"
