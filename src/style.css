@@ -1,1 +1,65 @@
-@import "tailwindcss";
+@import "tailwindcss";/* Import Tailwind directives */
+
+
+/* Custom Components using @apply to style PrimeVue elements.
+  This replaces the old standard CSS global block.
+*/
+
+/* 1. DataTable Header Cells */
+.table-header-cell {
+    /* Target the th element for the header styles */
+    @apply 
+        !bg-gray-200 
+        !text-[#172b64] 
+        !font-semibold 
+        !border-r !border-gray-200 
+        !border-b-2 !border-gray-300
+        !p-3; 
+    /* !important is used with @apply to override PrimeVue's inline/default styles */
+}
+
+/* 2. DataTable Main Container and Rows/Cells */
+.custom-datatable-tailwind {
+    @apply !text-sm !border !border-gray-300 !rounded-lg !overflow-hidden;
+}
+
+.custom-datatable-tailwind .p-datatable-tbody tr {
+    /* Horizontal row lines */
+    @apply !border-b !border-gray-200;
+}
+
+.custom-datatable-tailwind .p-datatable-tbody td {
+    /* Vertical cell lines and padding */
+    @apply !border-r !border-gray-200 !px-2 !py-2.5;
+}
+
+.custom-datatable-tailwind .p-datatable-tbody tr:last-child {
+    /* Remove bottom border on the last row */
+    @apply !border-b-0;
+}
+
+
+/* 3. Paginator Overrides */
+.custom-datatable-tailwind .p-paginator {
+    /* Paginator strip background and border */
+    @apply !bg-white !border-t !border-gray-300 !p-2 !justify-start; 
+}
+
+/* Hide PrimeVue's default status text element */
+.custom-datatable-tailwind .p-paginator-current {
+    @apply hidden;
+}
+
+/* Style the page number buttons */
+.custom-datatable-tailwind .p-paginator .p-paginator-pages .p-paginator-page {
+    @apply !text-gray-600 hover:!bg-gray-200 !rounded-md;
+}
+.custom-datatable-tailwind .p-paginator .p-paginator-pages .p-highlight {
+    /* Active page number */
+    @apply !bg-[#172b64] !text-white !rounded-md;
+}
+
+/* Style the RPP (Rows Per Page) dropdown to be pill-shaped */
+.custom-datatable-tailwind .p-dropdown {
+    @apply !rounded-full !border !border-gray-300;
+}
