@@ -63,3 +63,7 @@
 .custom-datatable-tailwind .p-dropdown {
     @apply !rounded-full !border !border-gray-300;
 }
+
+.colored-header {
+  color: blue;
+}
