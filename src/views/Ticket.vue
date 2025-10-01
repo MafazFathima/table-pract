@@ -15,7 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="p-5">
+  <div class="pb-5 pl-5 pr-5-5">
     <DataTable
       :value="tickets"
       paginator

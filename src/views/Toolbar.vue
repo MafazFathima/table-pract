@@ -88,7 +88,7 @@ const handleIconClick = (iconName) => {
 
             <button 
                 @click="downloadReport"
-                class="flex items-center space-x-2 px-4 py-2 bg-blue-900 text-white font-medium rounded-4xl hover:bg-blue-800 transition duration-150 shadow-md"
+                class="flex items-center h-[37] w-[168]  space-x-2 px-4 py-2 bg-blue-900 text-white font-medium rounded-4xl hover:bg-blue-800 transition duration-150 shadow-md"
             >
             <img
         :src="download"
