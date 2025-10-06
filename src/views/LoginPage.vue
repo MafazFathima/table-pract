@@ -38,7 +38,7 @@ loading.value= true;
       localStorage.setItem("accessToken", token);
       router.push("/dashboard");
     } else {
-      errorMessage.value = "something went code ";
+      errorMessage.value = "something went wrong ";
     }
   } catch (err) {
     errorMessage.value = err.response?.data?.message || "Login failed.";
@@ -188,3 +188,4 @@ loading.value= true;
     </div>
   </div>
 </template>
+<!-- *********************************************************************************************************** -->

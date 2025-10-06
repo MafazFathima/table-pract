@@ -11,6 +11,7 @@ const tickets = ref([]);
 onMounted(() => {
   // Load data from JSON into reactive variable
   tickets.value = ticketsData;
+
 });
 </script>
 
