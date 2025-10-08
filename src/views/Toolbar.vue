@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'
 import download from "../assets/download.svg";
 import print from "../assets/printer.svg";
 import remove from "../assets/removeTag.svg";
@@ -7,6 +8,8 @@ import redeem from "../assets/redeem.svg";
 // --- State for the Search Bar ---
 const searchTerm = ref('');
 const searchCategory = ref('All');
+
+const router = useRouter();
 
 const categories = [
     { label: 'All', value: 'All' },
@@ -21,7 +24,8 @@ const handleSearch = () => {
 
 // --- Actions for the Toolbar ---
 const createTicket = () => {
-    alert('Creating a new ticket...');
+  // ✅ Navigate to FileTicket.vue
+  router.push({ name: 'FileTicket' });  // or router.push('/file-ticket')
 };
 
 const downloadReport = () => {

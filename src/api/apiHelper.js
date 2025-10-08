@@ -1,31 +1,46 @@
-
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'https://api-user.dev.hyosungpay.com/v1',
+const instance = axios.create({
+  timeout: 120000,
+  withCredentials: false,
   headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json, text/plain, */*'
+    'Content-Type': 'application/json;charset=UTF-8',
   },
-  timeout: 10000
 });
 
+instance.interceptors.request.use(
+  async config => {
+    if (config.skipAuth) {
+      return config;
+    }
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, (error) => Promise.reject(error));
+    // Set default baseURL if not already set
+    config.baseURL = config.baseURL || import.meta.env.VITE_TANGOPLAY_SERVER_URL;
 
+    const accessToken = sessionStorage.getItem('accessToken');
 
-api.interceptors.response.use(
+    if (!accessToken) {
+      sessionStorage.clear();
+      localStorage.clear();
+      return Promise.reject(new Error('Authentication required'));
+    }
+
+    config.headers.Authorization = `Bearer ${accessToken}`;
+
+    return config;
+  },
+  error => Promise.reject(error)
+);
+
+instance.interceptors.response.use(
   response => response,
-  error => {
-    console.error('API error:', error?.response || error.message);
+  async error => {
+    if (error.response?.status === 401) {
+      sessionStorage.clear();
+      localStorage.clear();
+    }
     return Promise.reject(error);
   }
 );
 
-export default api;
+export default instance;

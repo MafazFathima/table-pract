@@ -1,6 +1,7 @@
 @import "tailwindcss";/* Import Tailwind directives */
 
 
+
 /* Custom Components using @apply to style PrimeVue elements.
   This replaces the old standard CSS global block.
 */
@@ -67,3 +68,5 @@
 .colored-header {
   color: blue;
 }
+
+/* ******************************************************************************************** */
